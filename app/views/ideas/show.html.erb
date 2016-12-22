@@ -1,0 +1,24 @@
+<a href="/users/<%= session[:user_id] %>/home">Dashboard</a>
+<br>
+<br>
+<%= @idea.user.alias %> says: <%= @idea.idea %>
+<br>
+<br>
+<br>
+<h3>People who Liked this post</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Alias</th>
+			<th>Name</th>
+		</tr>
+	</thead>
+	<% @users.each do |user| %>
+		<tbody>
+			<tr>
+				<td><a href="/users/<%= user.user.id %>"><%= user.user.alias %></a></td>
+				<td><%= user.user.name %></td>
+			</tr>
+		</tbody>
+	<%end%>
+</table>

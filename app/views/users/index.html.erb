@@ -1,0 +1,25 @@
+<h2>Please Login</h2>
+
+<% if flash[:errors] %>
+<% flash[:errors].each do |error| %>
+	<p><%= error %></p>
+<%end%>
+<%end%>
+<form action="/sessions" method="post">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	Email<input type="text" name="email">
+	Password<input type="password" name="password">
+	<input type="submit" name="submit" value="Login">
+</form>
+<hr>
+<h2>If you do not already have an account please sign up below!</h2>
+<form action="/users/new" method="post">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	Name<input type="text" name="user[name]">
+	Alias<input type="text" name="user[alias]">
+	Email<input type="text" name="user[email]">
+	Password<input type="password" name="user[password]">
+	Password Confirmation<input type="password" name="user[password_confirmation]">
+	<input type="submit" name="submit" value="Sign Up">
+</form>
+

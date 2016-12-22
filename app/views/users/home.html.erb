@@ -1,0 +1,31 @@
+<h2>Hi <%= @user.alias %>!</h2>
+<br>
+<%= flash[:errors] %>
+<form action="/ideas/new" method="post">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<input type="text" name="idea[idea]">
+	<input type="hidden" name="idea[user_id]" value="<%= @user.id %>">
+	<input type="submit" name="submit" value="Idea!">
+	
+</form>
+
+<% @ideas.each do |idea| %>
+	<p><a href="/users/<%= idea.user.id %>"><%= idea.user.alias %></a> says: <%= idea.idea %></p>
+	<form action="/like/<%= idea.id %>" method="post">
+		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+		<a href="/like/<%= idea.id%>">Like</a>
+	</form>
+	<form action="/like/<%= @user.id %>" method="post">
+		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+		<a href="/like/<%= idea.id %>/show"><%= Like.where(idea_id: idea.id).count %> Likes</a>
+	</form>
+	<% if idea.user.id == session[:user_id] %>
+		<form action="/idea/<%= idea.id %>/delete">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<input type="hidden" name="_method" value="delete">
+			<input type="submit" name="submit" value="Delete">
+			
+		</form>
+	<%end%>
+	
+<%end%>
